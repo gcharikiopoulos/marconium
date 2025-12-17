@@ -10,13 +10,13 @@
     <meta property="og:description" content="Technology consulting services specializing in web development, software engineering, system architecture, and digital transformation. Expert solutions for modern business needs." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://marconium.io" />
-    <meta property="og:image" content="https://marconium.io/assets/mlp-logo.png" />
+    <meta property="og:image" content="https://marconium.io/assets/logo.svg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://marconium.io/assets/mlp-logo.png" />
+    <meta name="twitter:image" content="https://marconium.io/assets/logo.svg" />
     <meta name="theme-color" content="hsl(210, 10%, 25%)" />
     <link rel="canonical" href="https://marconium.io" />
-    <link rel="icon" type="image/png" href="assets/mlp-logo.png">
-    <link rel="apple-touch-icon" href="assets/mlp-logo.png">
+    <link rel="icon" type="image/png" href="assets/logo.svg">
+    <link rel="apple-touch-icon" href="assets/logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -67,27 +67,13 @@
         overflow: hidden;
       }
 
-      .diagonal-stripes {
+      .diagonal-stripes-svg {
         position: absolute;
         inset: 0;
+        width: 100%;
+        height: 100%;
         pointer-events: none;
-        background: linear-gradient(
-          115deg,
-          transparent 0%,
-          transparent 65%,
-          var(--accent-red) 65%,
-          var(--accent-red) 72%,
-          var(--background) 72%,
-          var(--background) 73.5%,
-          var(--accent-green) 73.5%,
-          var(--accent-green) 80.5%,
-          var(--background) 80.5%,
-          var(--background) 82%,
-          var(--accent-yellow) 82%,
-          var(--accent-yellow) 89%,
-          transparent 89%,
-          transparent 100%
-        );
+        z-index: 2;
       }
 
       .content {
@@ -160,6 +146,47 @@
       .dot-yellow { background-color: var(--accent-yellow); }
       .dot-green { background-color: var(--accent-green); }
       .dot-red { background-color: var(--accent-red); }
+
+      /* =========================
+        CONSOLE STYLE TAGLINE
+        ========================= */
+      .console {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.6rem 0.9rem;
+
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 6px;
+
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+        text-transform: lowercase;
+
+        color: var(--foreground);
+        margin-top: 0.5rem;
+
+        animation: fadeIn 0.8s ease-out 0.3s forwards;
+        opacity: 0;
+
+        min-width: 300px;
+      }
+
+      .console .prompt {
+        color: var(--accent-green);
+        opacity: 0.9;
+      }
+
+      .console .typed {
+        color: var(--muted-foreground);
+        white-space: nowrap;
+      }
+
+      .console .cursor {
+        color: var(--accent-green);
+        animation: blink 1.5s step-end infinite;
+      }
 
       .contact {
         margin-top: 4rem;
@@ -240,6 +267,10 @@
         .tagline {
           font-size: 1.25rem;
         }
+        .console {
+          font-size: 1.1rem;
+          padding: 0.7rem 1rem;
+        }
       }
 
       @media (min-width: 1024px) {
@@ -251,11 +282,39 @@
   </head>
   <body>
     <main>
-      <div class="diagonal-stripes"></div>
+      <svg
+        class="diagonal-stripes-svg"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <!-- transparent base -->
+        <rect width="100" height="100" fill="transparent" />
+
+        <!-- red stripe -->
+        <rect x="65" y="-40" width="9" height="180"
+              fill="var(--accent-red)"
+              transform="rotate(20 50 50)" />
+
+        <!-- green stripe -->
+        <rect x="75.5" y="-40" width="9" height="180"
+              fill="var(--accent-green)"
+              transform="rotate(20 50 50)" />
+
+        <!-- yellow stripe -->
+        <rect x="86" y="-40" width="9" height="180"
+              fill="var(--accent-yellow)"
+              transform="rotate(20 50 50)" />
+      </svg>
       
       <div class="content">
         <h1>marconium</h1>
-        <p class="tagline"><span id="typed-text"></span></p>
+        <div class="console">
+          <span class="prompt">~/</span>
+          <span class="typed" id="typed-text"></span>
+          <span class="cursor">_</span>
+        </div>
+
         
         <div class="accent-dots">
           <span class="dot dot-red"></span>
@@ -281,7 +340,7 @@
         'web development',
         'software engineering',
         'digital transformation',
-        'system architecture',
+        'systems architecture',
         'technical consulting'
       ];
       
