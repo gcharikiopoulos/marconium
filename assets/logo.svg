@@ -1,0 +1,10 @@
+<svg width="136" height="136" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="marconium mark">
+  <rect width="100" height="100" fill="#3e464c"></rect>
+  
+        <rect x="23" y="-45" width="18" height="220" fill="#e05062" transform="rotate(25 50 50)"></rect>
+      
+        <rect x="47" y="-45" width="18" height="220" fill="#44abb6" transform="rotate(25 50 50)"></rect>
+      
+        <rect x="71" y="-45" width="18" height="220" fill="#fdc446" transform="rotate(25 50 50)"></rect>
+      
+</svg>

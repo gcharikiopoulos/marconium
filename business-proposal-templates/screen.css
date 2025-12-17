@@ -1,0 +1,9 @@
+/* Screen-only framing */
+body {
+  background: #111;
+}
+
+.a4 {
+  margin: 16mm auto;
+  box-shadow: 0 0 14px rgba(0,0,0,0.35);
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>marconium – Business Proposal</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="print.css">
+  <link rel="stylesheet" href="screen.css" media="screen">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- SVG Logo helper (global logoSvg()) -->
+  <script src="../assets/logo.js"></script>
+</head>
+
+<body>
+
+<script>
+/* ======================================================
+   LOAD DATA (?c=sample)
+   ====================================================== */
+function loadProposalData() {
+  const params = new URLSearchParams(window.location.search);
+  const customer = params.get("c") || "sample";
+
+  const script = document.createElement("script");
+  script.src = `data/${customer}.js`;
+
+  script.onload = () => {
+    if (!window.PROPOSAL_DATA) {
+      document.body.innerHTML = "<pre>Proposal data not found</pre>";
+      return;
+    }
+    render(window.PROPOSAL_DATA);
+  };
+
+  script.onerror = () => {
+    document.body.innerHTML =
+      `<pre style="color:red">Could not load data/${customer}.js</pre>`;
+  };
+
+  document.head.appendChild(script);
+}
+
+/* ======================================================
+   HELPERS
+   ====================================================== */
+function el(tag, className, html) {
+  const e = document.createElement(tag);
+  if (className) e.className = className;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function header(h) {
+  const elHeader = el("header", "header");
+
+  if (h?.logo === "svg") {
+    const logoWrap = el("div", "logo");
+    logoWrap.innerHTML = logoSvg({ width: 36, height: 36 });
+    elHeader.appendChild(logoWrap);
+  }
+
+  if (h?.title) {
+    elHeader.appendChild(el("span", null, h.title));
+  }
+
+  return elHeader;
+}
+
+function footer(text) {
+  return el("footer", "footer", text || "");
+}
+
+function accentLine(color) {
+  return el("div", `accent-line accent-${color}`);
+}
+
+/* ======================================================
+   PAGE BUILDERS
+   ====================================================== */
+function coverPage(p) {
+  const page = el("div", "a4 page-dark cover-bg");
+
+  /* Dedicated COVER background SVG (NOT logo) */
+  const bg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  bg.setAttribute("class", "cover-bg-svg");
+  bg.setAttribute("viewBox", "0 0 100 100");
+  bg.setAttribute("preserveAspectRatio", "none");
+  bg.setAttribute("aria-hidden", "true");
+
+  const stripeWidth = 14;
+  const stripeMargin = 4;
+  const stripeHeight = 620;
+  const y = -300;
+  const startX_a = 38;
+  const startX_b = startX_a + stripeWidth + stripeMargin;
+  const startX_c = startX_b + stripeWidth + stripeMargin;
+
+  bg.innerHTML = `
+    <rect width="400" height="600" fill="#3e464c"/>
+    <rect x="${startX_a}" y="${y}" width="${stripeWidth}" height="${stripeHeight}" fill="#e05062" transform="rotate(35 50 80)" />
+    <rect x="${startX_b}" y="${y}" width="${stripeWidth}" height="${stripeHeight}" fill="#44abb6" transform="rotate(35 50 80)" />
+    <rect x="${startX_c}" y="${y}" width="${stripeWidth}" height="${stripeHeight}" fill="#fdc446" transform="rotate(35 50 80)" />
+  `;
+
+  page.appendChild(bg);
+
+  page.append(
+    (() => {
+      const s = el("section", "cover");
+      s.append(
+        el("h1", "cover-title", p.title),
+        el("p", "subtitle cover-subtitle", p.subtitle),
+        el("div", "meta", p.metaHtml || "")
+      );
+      return s;
+    })()
+  );
+
+  return page;
+}
+
+function standardPage(p) {
+  const page = el("div", "a4 page-light");
+
+  page.append(
+    header(p.header),
+    accentLine(p.accent),
+    (() => {
+      const s = el("section", "content layout-standard");
+      p.sections.forEach(sec => {
+        s.append(
+          el("h2", null, sec.title),
+          el("p", null, sec.text)
+        );
+      });
+      return s;
+    })(),
+    footer(p.footer)
+  );
+
+  return page;
+}
+
+function twoColPage(p) {
+  const page = el("div", "a4 page-light");
+
+  page.append(
+    header(p.header),
+    accentLine(p.accent),
+    (() => {
+      const s = el("section", "content layout-two-col");
+
+      const left = el("div");
+      left.append(
+        el("h2", null, p.left.title),
+        el("p", null, p.left.text)
+      );
+
+      const right = el("div");
+      right.append(el("h2", null, p.right.title));
+      const ul = el("ul");
+      p.right.list.forEach(i => ul.appendChild(el("li", null, i)));
+      right.appendChild(ul);
+
+      s.append(left, right);
+      return s;
+    })(),
+    footer(p.footer)
+  );
+
+  return page;
+}
+
+function outcomesPage(p) {
+  const page = el("div", "a4 page-light");
+
+  page.append(
+    header(p.header),
+    accentLine(p.accent),
+    (() => {
+      const s = el("section", "content layout-outcomes");
+      p.outcomes.forEach(o => {
+        const box = el("div", "outcome");
+        box.append(
+          el("h3", null, o.title),
+          el("p", null, o.text)
+        );
+        s.appendChild(box);
+      });
+      return s;
+    })(),
+    footer(p.footer)
+  );
+
+  return page;
+}
+
+function endPage(p) {
+  const page = el("div", "a4 page-dark");
+
+  page.append(
+    header(p.header),
+    accentLine(p.accent),
+    (() => {
+      const s = el("section", "end");
+      s.append(
+        el("h2", null, p.title),
+        el("p", "subtitle", p.subtitle),
+        el("div", "meta", p.metaHtml || "")
+      );
+      return s;
+    })(),
+    footer(p.footer)
+  );
+
+  return page;
+}
+
+/* ======================================================
+   RENDER
+   ====================================================== */
+function render(proposal) {
+  proposal.pages.forEach(p => {
+    switch (p.type) {
+      case "cover":    document.body.appendChild(coverPage(p)); break;
+      case "standard": document.body.appendChild(standardPage(p)); break;
+      case "twoCol":   document.body.appendChild(twoColPage(p)); break;
+      case "outcomes": document.body.appendChild(outcomesPage(p)); break;
+      case "end":      document.body.appendChild(endPage(p)); break;
+    }
+  });
+}
+
+loadProposalData();
+</script>
+
+</body>
+</html>
