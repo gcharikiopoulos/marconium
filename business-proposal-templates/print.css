@@ -134,7 +134,7 @@ html, body {
    TYPOGRAPHY
    =========================== */
 h1 {
-  font-size: 26pt;
+  font-size: 34pt;
   margin-bottom: 10mm;
   letter-spacing: 0.05em;
 }
@@ -147,6 +147,12 @@ h2 {
 
 .page-dark h2 {
   color: var(--yellow);
+}
+
+.end h2 {
+    font-size: 18pt;
+    text-align: right;
+    margin-top: 80mm;
 }
 
 h3 {

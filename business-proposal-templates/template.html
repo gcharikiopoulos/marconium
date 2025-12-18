@@ -113,7 +113,7 @@ function coverPage(p) {
       const s = el("section", "cover");
       s.append(
         el("h1", "cover-title", p.title),
-        el("p", "subtitle cover-subtitle", p.subtitle),
+        el("p", "subtitle", p.subtitle),
         el("div", "meta", p.metaHtml || "")
       );
       return s;
