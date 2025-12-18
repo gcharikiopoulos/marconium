@@ -1,0 +1,58 @@
+/* =========================================
+   LANDSCAPE OVERRIDES ONLY
+   Include this file only when needed
+   ========================================= */
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+/* Swap page dimensions */
+.a4 {
+  width: 297mm;
+  height: 210mm;
+}
+
+/* Header / footer slightly tighter vertically */
+.header {
+  height: 18mm;
+  padding: 5mm 20mm;
+}
+
+.footer {
+  height: 16mm;
+  padding: 5mm 20mm;
+}
+
+/* Content spacing tuned for horizontal flow */
+.content,
+.end {
+  padding: 6mm 25mm 0 25mm;
+}
+
+/* Cover background SVG: less vertical overflow */
+.cover-bg-svg {
+  height: 100%;
+  bottom: 0;
+}
+
+/* Cover title slightly smaller to avoid overpowering */
+h1 {
+  font-size: 30pt;
+}
+
+/* End page vertical centering fix */
+.end h2 {
+  margin-top: 40mm;
+}
+
+/* Two-column layouts breathe better in landscape */
+.layout-two-col {
+  gap: 16mm;
+}
+
+/* Outcomes grid benefits from extra width */
+.layout-outcomes {
+  gap: 14mm;
+}
