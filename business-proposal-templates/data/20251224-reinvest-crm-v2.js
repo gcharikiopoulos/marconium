@@ -260,7 +260,16 @@ window.PROPOSAL_DATA = {
               This covers all work required to reach alignment and make the
               key decisions that define the path forward.
             </small>
-            <br /><br />${HORIZONTAL_LINE}
+
+            <br /><br />
+            <strong>Payment terms</strong>
+            <br />
+            <ul>
+              <li>50% invoiced upon agreement signing</li>
+              <li>50% invoiced upon delivery of the Phase 1 deliverable</li>
+            </ul>
+
+            <br />${HORIZONTAL_LINE}
           `
         },
 
