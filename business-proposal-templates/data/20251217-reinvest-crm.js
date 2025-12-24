@@ -215,7 +215,7 @@ window.PROPOSAL_DATA = {
                 <td style="padding: 0 10px;"></td>
                 <td style="padding-top: 20px;"><strong ${TABLE_HEADER_COLOR}>cost:</strong></td>
                 <td style="padding: 0 20px;"></td>
-                <td style="padding-top: 20px;"><strong>€ 8,000</strong> <small>(excl. VAT)</small></td>
+                <td style="padding-top: 20px;"><strong>€ 7,000</strong> <small>(excl. VAT)</small></td>
               </tr>
             </table>
 
